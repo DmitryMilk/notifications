@@ -3,21 +3,26 @@
 <head>
 <script>
 
+function writeLog(message) {
+    console.log(message)
+    loggingArea.value += message + '\n'
+}
+
 function notify(message, tag) {
     if ( ! ("Notification") in window ) {
-        console.log("Notifications not supported")
+        writeLog("Notifications not supported")
         return
     }
     
     if ( Notification.permission === "denied" ) {
-        console.log("Notifications denied by user")
+        writeLog("Notifications denied by user")
         return
     }
     
     if ( Notification.permission === "granted" ) {
         const notification = new Notification(message, {tag: tag})
         notification.addEventListener("close", (event) => {
-            console.log(`Notification '${tag}' closed`)
+            writeLog(`Notification '${tag}' closed`)
         })
     } else {
         Notification.requestPermission().then(() => {
@@ -33,7 +38,7 @@ function scheduleNotificaion(message, tag, timeout) {
         },
         3000
     )
-    console.log(`Notification '${tag}' scheduled`)
+    writeLog(`Notification '${tag}' scheduled`)
 }
 
 </script>
@@ -41,5 +46,10 @@ function scheduleNotificaion(message, tag, timeout) {
 <body>
 <button onclick="scheduleNotificaion('Hello!', 'hello1', 3000)">Notify me after 3 seconds!</button>
 <button onclick="notify('Greetings!', 'greet1')">Greet me!</button>
+<br />
+<br />
+<textarea id="loggingArea" cols="120" rows="20" readonly></textarea>
+<br />
+<button onclick="loggingArea.value=''">Clear log</button>
 </body>
 </html>
