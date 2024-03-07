@@ -26,7 +26,7 @@ function notify(message, tag) {
     }
 }
 
-function schedule_notificaion(message, tag) {
+function schedule_notificaion(message, tag, timeout) {
     setTimeout(
         () => {
             notify(message, tag)
@@ -39,7 +39,7 @@ function schedule_notificaion(message, tag) {
 </script>
 </head>
 <body>
-<button onclick="schedule_notificaion('Hello!', 'hello1')">Notify me!</button>
+<button onclick="schedule_notificaion('Hello!', 'hello1', 3000)">Notify me after 3 seconds!</button>
 <button onclick="notify('Greetings!', 'greet1')">Greet me!</button>
 </body>
 </html>
