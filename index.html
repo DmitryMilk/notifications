@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+
+function notify(message, tag) {
+    if ( ! ("Notification") in window ) {
+        console.log("Notifications not supported")
+        return
+    }
+    
+    if ( Notification.permission === "denied" ) {
+        console.log("Notifications denied by user")
+        return
+    }
+    
+    if ( Notification.permission === "granted" ) {
+        const notification = new Notification(message, {tag: tag})
+        notification.addEventListener("close", (event) => {
+            console.log(`Notification '${tag}' closed`)
+        })
+    } else {
+        Notification.requestPermission().then(() => {
+            notify(message, tag)
+        })
+    }
+}
+
+function schedule_notificaion(message, tag) {
+    setTimeout(
+        () => {
+            notify(message, tag)
+        },
+        3000
+    )
+    console.log(`Notification '${tag}' scheduled`)
+}
+
+</script>
+</head>
+<body>
+<button onclick="schedule_notificaion('Hello!', 'hello1')">Notify me!</button>
+<button onclick="notify('Greetings!', 'greet1')">Greet me!</button>
+</body>
+</html>
